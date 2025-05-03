@@ -8,8 +8,8 @@ using Elastic.Serilog.Sinks;
 using Elastic.Transport;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
-using Rabbit.Consumers.Projects;
 using RabbitMQ.Client;
+using RabbitMQ.Consumers.Projects;
 using Serilog;
 using Serilog.Events;
 
@@ -18,17 +18,17 @@ builder.Host.UseSerilog((context, cfg) =>
 {
     cfg
     .Enrich.WithProperty("Application", "Direction0")
-    //.WriteTo.Console();
-    .WriteTo.Elasticsearch(new[] { new Uri(builder.Configuration["Elastic:Url"]) }, opts =>
-    {
-        opts.TextFormatting = new EcsTextFormatterConfiguration();
-        opts.DataStream = new DataStreamName("logs", "dotnet", "default");
-        opts.BootstrapMethod = BootstrapMethod.Failure;
-        opts.MinimumLevel = LogEventLevel.Information;
-    }, transport =>
-    {
-        transport.Authentication(new ApiKey(builder.Configuration["Elastic:ApiKey"]));
-    });
+    .WriteTo.Console();
+    //.WriteTo.Elasticsearch(new[] { new Uri(builder.Configuration["Elastic:Url"]) }, opts =>
+    //{
+    //    opts.TextFormatting = new EcsTextFormatterConfiguration();
+    //    opts.DataStream = new DataStreamName("logs", "dotnet", "default");
+    //    opts.BootstrapMethod = BootstrapMethod.Failure;
+    //    opts.MinimumLevel = LogEventLevel.Information;
+    //}, transport =>
+    //{
+    //    transport.Authentication(new ApiKey(builder.Configuration["Elastic:ApiKey"]));
+    //});
 });
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -1,4 +1,4 @@
-﻿using InternsTestModels.Models.Data.Projects;
+﻿using DataModels.Projects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data

@@ -18,13 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Rabbit\Rabbit.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="InternsTestModels">
-      <HintPath>..\..\InternsTestModels\InternsTestModels\bin\Debug\net8.0\InternsTestModels.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Rabbit\RabbitMQ.csproj" />
   </ItemGroup>
 
 </Project>

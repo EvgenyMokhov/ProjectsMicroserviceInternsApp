@@ -1,8 +1,7 @@
-﻿using InternsTestModels.Models.Data.Interns;
-using InternsTestModels.Models.Data.Projects;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Data;
 using Data.Interfaces;
+using DataModels.Projects;
 
 namespace Data.Implementations
 {

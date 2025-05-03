@@ -1,29 +1,25 @@
-﻿using InternsTestModels.Models.Enums;
-using InternsTestModels.Models.Rabbit.Projects.Requests;
-using MassTransit;
+﻿using MassTransit;
 using BusinessLogic;
+using Microsoft.Extensions.Logging;
+using Rabbit.Projects.Requests;
+using Rabbit.Projects.Responses;
 
-namespace Rabbit.Consumers.Projects
+namespace RabbitMQ.Consumers.Projects
 {
     public class DeleteProjectConsumer : IConsumer<DeleteProjectRequest>
     {
         private readonly ServiceManager serviceManager;
-        private readonly IServiceProvider serviceProvider;
-        public DeleteProjectConsumer(IServiceProvider provider)
+        private readonly ILogger<DeleteProjectConsumer> logger;
+        public DeleteProjectConsumer(IServiceProvider provider, ILogger<DeleteProjectConsumer> logger)
         {
             serviceManager = new(provider);
-            serviceProvider = provider;
+            this.logger = logger;
         }
         public async Task Consume(ConsumeContext<DeleteProjectRequest> context)
         {
-            try
-            {
-                await serviceManager.Projects.DeleteProjectAsync(context.Message.Id);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            DeleteProjectResponse response = new();
+            await serviceManager.Projects.DeleteProjectAsync(context.Message.Id);
+            await context.RespondAsync(response);
         }
     }
 }

@@ -1,29 +1,26 @@
-﻿using InternsTestModels.Models.Rabbit.Projects.Requests;
-using MassTransit;
+﻿using MassTransit;
 using BusinessLogic;
+using Microsoft.Extensions.Logging;
+using Rabbit.Projects.Requests;
+using Rabbit.Projects.Responses;
 
-namespace Rabbit.Consumers.Projects
+namespace RabbitMQ.Consumers.Projects
 {
     public class UpdateProjectConsumer : IConsumer<UpdateProjectRequest>
     {
         private readonly ServiceManager serviceManager;
-        private readonly IServiceProvider serviceProvider;
-        public UpdateProjectConsumer(IServiceProvider provider)
+        private readonly ILogger<UpdateProjectConsumer> logger;
+        public UpdateProjectConsumer(IServiceProvider provider, ILogger<UpdateProjectConsumer> logger)
         {
             serviceManager = new(provider);
-            serviceProvider = provider;
+            this.logger = logger;
         }
 
         public async Task Consume(ConsumeContext<UpdateProjectRequest> context)
         {
-            try
-            {
-                await serviceManager.Projects.UpdateProjectAsync(context.Message.RequestData);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            UpdateProjectResponse response = new();
+            await serviceManager.Projects.UpdateProjectAsync(context.Message.RequestData);
+            await context.RespondAsync(response);
         }
     }
 }

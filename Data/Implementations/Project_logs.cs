@@ -1,5 +1,5 @@
-﻿using InternsTestModels.Models.Data.Projects;
-using Data.Interfaces;
+﻿using Data.Interfaces;
+using DataModels.Projects;
 
 namespace Data.Implementations
 {

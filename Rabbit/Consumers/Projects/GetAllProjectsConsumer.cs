@@ -1,32 +1,25 @@
-﻿using InternsTestModels.Models.Enums;
-using InternsTestModels.Models.Rabbit.Projects.Requests;
-using InternsTestModels.Models.Rabbit.Projects.Responses;
-using MassTransit;
+﻿using MassTransit;
 using BusinessLogic;
+using Microsoft.Extensions.Logging;
+using Rabbit.Projects.Requests;
+using Rabbit.Projects.Responses;
 
-namespace Rabbit.Consumers.Projects
+namespace RabbitMQ.Consumers.Projects
 {
     public class GetAllProjectsConsumer : IConsumer<GetAllProjectsRequest>
     {
         private readonly ServiceManager serviceManager;
-        private readonly IServiceProvider serviceProvider;
-        public GetAllProjectsConsumer(IServiceProvider provider)
+        private readonly ILogger<GetAllProjectsConsumer> logger;
+        public GetAllProjectsConsumer(IServiceProvider provider, ILogger<GetAllProjectsConsumer> logger)
         {
             serviceManager = new(provider);
-            serviceProvider = provider;
+            this.logger = logger;
         }
 
         public async Task Consume(ConsumeContext<GetAllProjectsRequest> context)
         {
-            try
-            {
-                GetAllProjectsResponse response = new() { ResponseData = await serviceManager.Projects.GetAllProjectAsync() };
-                await context.RespondAsync(response);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            GetAllProjectsResponse response = new() { ResponseData = await serviceManager.Projects.GetAllProjectAsync() };
+            await context.RespondAsync(response);
         }
     }
 }

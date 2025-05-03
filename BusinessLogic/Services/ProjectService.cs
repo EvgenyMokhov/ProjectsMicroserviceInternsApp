@@ -1,9 +1,9 @@
-﻿using InternsTestModels.Models.Enums;
-using InternsTestModels.Models.Data.Projects;
-using InternsTestModels.Models.DTOs;
-using Data;
+﻿using Data;
+using DataModels.Projects;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Other.Enums;
+using Rabbit.Projects;
 
 namespace BusinessLogic.Services
 {
@@ -23,7 +23,7 @@ namespace BusinessLogic.Services
             DataManager dataManager = scope.ServiceProvider.GetRequiredService<DataManager>();
             Project dbProject = new()
             {
-                Id = Guid.NewGuid(),
+                Id = project.Id,
                 Name = project.Name,
                 Description = "This is description!",
                 IsActive = true
@@ -75,7 +75,10 @@ namespace BusinessLogic.Services
         {
             using IServiceScope scope = provider.CreateScope();
             DataManager dataManager = scope.ServiceProvider.GetRequiredService<DataManager>();
-            return DbProjectToDto(await dataManager.Projects.GetProjectAsync(id));
+            Project project = await dataManager.Projects.GetProjectAsync(id);
+            if (project == null)
+                throw new ArgumentException("Project not found");
+            return DbProjectToDto(project);
         }
 
         public async Task DeleteProjectAsync(Guid id)

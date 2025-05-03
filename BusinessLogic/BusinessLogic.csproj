@@ -17,8 +17,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="InternsTestModels">
-      <HintPath>..\..\InternsTestModels\InternsTestModels\bin\Debug\net8.0\InternsTestModels.dll</HintPath>
+    <Reference Include="DataModels">
+      <HintPath>..\..\InternsTestModels\DataModels\bin\Debug\net8.0\DataModels.dll</HintPath>
+    </Reference>
+    <Reference Include="Other">
+      <HintPath>..\..\InternsTestModels\HttpDto\bin\Debug\net8.0\Other.dll</HintPath>
+    </Reference>
+    <Reference Include="Rabbit">
+      <HintPath>..\..\InternsTestModels\Rabbit\bin\Debug\net8.0\Rabbit.dll</HintPath>
     </Reference>
   </ItemGroup>
 

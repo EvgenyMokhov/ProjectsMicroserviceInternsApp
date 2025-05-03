@@ -1,4 +1,4 @@
-﻿using InternsTestModels.Models.Data.Projects;
+﻿using DataModels.Projects;
 
 namespace Data.Interfaces
 {
